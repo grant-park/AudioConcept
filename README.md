@@ -23,7 +23,7 @@
 8. Open Safari and navigate to `Develop > Your Device`
 9. The Safari browser will open and you can debug/inspect.
 
-# Debugging the console for Android
+## Debugging the console for Android
 1. Install Android Studio
 2. Update all drivers and check all software additions they throw at you.
 3. Create an emulator or hook up your device.
