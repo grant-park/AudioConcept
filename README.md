@@ -15,7 +15,7 @@
 ## Debugging the console for iOS
 1. Install XCode
 2. cd platforms/ios/
-3. Open xcodeproj via XCdoe
+3. Open xcodeproj via XCode
 4. Create a wildcard provisioning profile on iTunes Connect if you don't have one already.
 5. Click "Fix Code Signing Issues" if applicable under "General Settings."
 6. Select your iOS device as the target.
