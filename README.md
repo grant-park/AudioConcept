@@ -7,10 +7,10 @@
 4. `cordova platforms add browser` (Currently does not support audio recording)
 5. `cordova plugin add cordova-plugin-audioinput`
 
-## Navigatin the Project
-* www/ has the JS and UI
-* plugins contains cordova endpoints for mic
-* platforms contains native specific projects for iOS/Android
+## Navigating the Project
+* `www/` has the JS and UI
+* `plugins` contains cordova endpoints for mic
+* `platforms` contains native specific projects for iOS/Android
 
 ## Testing on iOS/Android/Browser
 1. `cordova run ios`
