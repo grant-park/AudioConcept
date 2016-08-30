@@ -1,0 +1,22 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: tomato;
+  width: 300px;
+  height: 501px;
+}
+
+.startButton {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  color: black;
+}
+
+.stopButton {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  color: black;
+}

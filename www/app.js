@@ -3,8 +3,21 @@
 
 angular.module("NoteAI", [])
 
-.factory('AudioService', function($q){
+.factory('TimerService',function(){
+    return {
+        parseTime: function(duration) {
+            var seconds = parseInt((duration/1000)%60),
+                minutes = parseInt((duration/(1000*60))%60),
+                hours = parseInt((duration/(1000*60*60))%24);
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            seconds = (seconds < 10) ? "0" + seconds : seconds;
+            return hours + ":" + minutes + ":" + seconds;
+        }
+    }
+})
 
+.factory('AudioService', function(){
     window.URL = window.URL || window.webkitURL;
     var objectURL = null;
     var audioDataBuffer = [];
@@ -19,7 +32,7 @@ angular.module("NoteAI", [])
         /**
          * Called when audioinput hiccups.
          */
-        onAudioInputError: function () {
+        onAudioInputError: function (error) {
             alert("onAudioInputError event recieved: " + JSON.stringify(error));
         },
         /**
@@ -66,6 +79,11 @@ angular.module("NoteAI", [])
                     var encoder = new WavAudioEncoder(captureCfg.sampleRate, captureCfg.channels);
                     encoder.encode([audioDataBuffer]);
                     var blob = encoder.finish("audio/wav");
+                    // send this blob to server;
+                    console.dir(blob);
+                    console.log("logging blob",blob);
+
+                    // adapt this to angular
                     var reader = new FileReader();
                     reader.onload = function (evt) {
                         var audio = document.createElement("AUDIO");
@@ -100,7 +118,10 @@ angular.module("NoteAI", [])
     return api;
 })
 
-.controller('NoteAICtrl', function(AudioService){
+.controller('NoteAICtrl', function($scope,AudioService,$interval,TimerService){
+    var aggregateSeconds = 0;
+    var interval;
+    $scope.displayTime = "00:00:00"
     // Make it possible to run the demo on desktop
     if (!window.cordova) {
         // Make it possible to run the demo on desktop
@@ -111,6 +132,19 @@ angular.module("NoteAI", [])
         // For Cordova apps
         document.addEventListener('deviceready', AudioService.onDeviceReady, false);
     }
+    $scope.startRecording = function(){
+        AudioService.startCapture();
+        interval = $interval(function(){
+            aggregateSeconds += 1000;
+            $scope.displayTime = TimerService.parseTime(aggregateSeconds);
+        },1000);
+    };
+    $scope.stopRecording = function(){
+        if (interval) {
+            $interval.cancel(interval);
+        }
+        AudioService.stopCapture();
+    };
 });
 
 })();
